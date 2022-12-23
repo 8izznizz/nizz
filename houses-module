@@ -1,0 +1,60 @@
+import * as Phaser from 'phaser';
+import { getHouseData, saveHouseData } from './database';
+
+const housesContainer = scene.add.container(0, 0);
+
+// Set up a list to display the houses
+const housesList = scene.add.selectList(10, 10, [], {
+  font: '16px Arial',
+  width: 300,
+  height: 300,
+  backgroundColor: '#ffffff',
+  color: '#000000'
+});
+housesContainer.add(housesList);
+
+// Set up a "Visit" button to visit the selected house
+const visitButton = scene.add.text(320, 10, 'Visit', {
+  font: '16px Arial',
+  color: '#ffffff',
+  backgroundColor: '#5e5e5e',
+  padding: {
+    top: 10,
+    bottom: 10,
+    left: 20,
+    right: 20
+  }
+});
+visitButton.setInteractive();
+visitButton.on('pointerdown', () => {
+  // Load the house data for the selected house
+  const houseData = getHouseData(housesList.getValue());
+
+  // Update the scene to show the house
+  updateHouseScene(houseData);
+});
+housesContainer.add(visitButton);
+
+// Set up a "Save" button to save the current house state
+const saveButton = scene.add.text(320, 50, 'Save', {
+  font: '16px Arial',
+  color: '#ffffff',
+  backgroundColor: '#5e5e5e',
+  padding: {
+    top: 10,
+    bottom: 10,
+    left: 20,
+    right: 20
+  }
+});
+saveButton.setInteractive();
+saveButton.on('pointerdown', () => {
+  // Save the current house state to the database
+  saveHouseData(currentHouseData);
+});
+housesContainer.add(saveButton);
+
+function updateHouseScene(houseData) {
+  // Write code here to update the scene based on the house data
+  // This could involve loading new assets, updating sprite properties, etc.
+}
